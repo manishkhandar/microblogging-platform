@@ -18,7 +18,8 @@ def get_unique_int():
 
 class UserDetailView(APIView):
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         body = json.loads(request.body)
         username = body.get('username')
         email = body.get('email')
@@ -44,7 +45,8 @@ class UserDetailView(APIView):
         cache.set(cache_key, user_data_json, CACHE_TTL)
         return JsonResponse({'user_id': user.user_id}, status=200)
 
-    def put(self, request, user_id):
+    @staticmethod
+    def put(request, user_id):
         try:
             user = User.objects.get(user_id=user_id)
             if request.method == 'PUT' or request.method == 'PATCH':
@@ -78,7 +80,8 @@ class UserDetailView(APIView):
         except User.DoesNotExist:
             return JsonResponse({'error': 'User not found'}, status=404)
 
-    def get(self, request, user_id):
+    @staticmethod
+    def get(request, user_id):
         try:
             if request.method == 'GET':
                 cache_key = f'user:{user_id}'
