@@ -68,16 +68,19 @@ class PostView(APIView):
             cache.set(cache_key, post_data_json, CACHE_TTL)
 
             return JsonResponse({"post_id": post_id, "content": content}, status=200)
-        except:
-            return JsonResponse({'error': 'Something went wrong'}, status=500)
+        except Post.DoesNotExist:
+            return JsonResponse({'error': 'post not found'}, status=404)
 
     @staticmethod
     def delete(request, post_id):
-        post = get_object_or_404(Post, post_id=post_id)
-        cache_key = f'post:{post_id}'
-        cache.delete(cache_key)
-        post.delete()
-        return JsonResponse({"message": "Post deleted."}, status=204)
+        try:
+            post = get_object_or_404(Post, post_id=post_id)
+            cache_key = f'post:{post_id}'
+            cache.delete(cache_key)
+            post.delete()
+            return JsonResponse({"message": "Post deleted."}, status=200)
+        except Post.DoesNotExist:
+            return JsonResponse({'error': 'Post not found'}, status=404)
 
 
 class PostsView(APIView):
