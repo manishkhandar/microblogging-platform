@@ -5,13 +5,19 @@
 * Run `pip install -r requirement.txt` to install the dependency
 * Create a __.env__ file in the root directory
 * Add the following details to .env
-  * `SECRET_KEY = your Django Secret key'`
-  * `NAME = database name`
-  * `USER = username`
-  * `PASSWORD = password`
-  * `HOST = host`
-  * `PORT = port`
+    ```javasript
+    SECRET_KEY = your Django Secret key'
+    NAME = database name
+    USER = username
+    PASSWORD = password
+    HOST = host
+    PORT = port
+    ```
 * Run `python manage.py runserver` to start the server
+* Start the Redis server to use the Redis caching mechanism
+  ```javascript
+     redis://localhost:6379/0
+  ```
 
 
 # Microblogging Platform API
